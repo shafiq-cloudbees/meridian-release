@@ -29,7 +29,7 @@ jobs:
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
       instructions: Review staging deployment results before approving production release
-      disallowLaunchByUser: false
+      disallowLaunchByUser: true
       approvers: 867a7f5a-0b69-11f0-acd9-42010a83ae38
       notifyAllEligibleUsers: false
   deploy-production:
