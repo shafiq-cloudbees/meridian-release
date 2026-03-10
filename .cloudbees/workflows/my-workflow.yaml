@@ -3,6 +3,11 @@ kind: workflow
 name: Meridian Release v1.0
 on:
   workflow_dispatch:
+    inputs:
+      manifest:
+        description: Release manifest (JSON)
+        type: string
+        required: false
 metadata:
   stages/v1alpha1:
     - name: Staging
@@ -21,7 +26,11 @@ jobs:
       - uses: cloudbees-io/checkout@v1
       - name: Deploy to Staging
         uses: docker://alpine:latest
-        run: echo "Deploying Meridian Payment Platform to Staging"
+        run: |
+          echo "Deploying Meridian Payment Platform to Staging"
+          echo "Manifest: ${{ inputs.manifest }}"
+          echo "Components: account-service, payment-api, web-portal"
+          echo "Deployment successful"
         kind: deploy
   production-gate:
     needs: deploy-staging
@@ -38,5 +47,9 @@ jobs:
     steps:
       - name: Deploy to Production
         uses: docker://alpine:latest
-        run: echo "Deploying Meridian Payment Platform to Production"
+        run: |
+          echo "Deploying Meridian Payment Platform to Production"
+          echo "Manifest: ${{ inputs.manifest }}"
+          echo "Components: account-service, payment-api, web-portal"
+          echo "Deployment successful"
         kind: deploy
